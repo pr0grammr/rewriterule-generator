@@ -5,6 +5,8 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'en'
+    csv_tmp_directory: '%kernel.root_dir%/tmp'
+    csv_upload_directory: '%kernel.project_dir%/public/uploads'
 
 services:
     # default configuration for services in *this* file
@@ -23,6 +25,14 @@ services:
     App\Controller\:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
+
+    App\Service\FileUploader:
+        arguments:
+            $destination: '%csv_tmp_directory%'
+            $file_name:
+                prefix: 'rewrites'
+                date_format: 'Y_m_d_H_i'
+                extension: 'txt'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
