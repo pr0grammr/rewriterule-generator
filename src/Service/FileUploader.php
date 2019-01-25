@@ -43,12 +43,13 @@ class FileUploader
      * uploads file to tmp folder
      *
      * @param UploadedFile $file
+     * @param string $filename
      * @return void
      */
-    public function upload(UploadedFile $file)
+    public function upload(UploadedFile $file, string $filename)
     {
         try {
-            $file->move($this->_destination, $this->buildFileName());
+            $file->move($this->_destination, $filename);
         } catch (FileException $e) {
 
         }
@@ -59,7 +60,7 @@ class FileUploader
      *
      * @return string
      */
-    private function buildFileName()
+    public function buildFileName()
     {
         return sprintf("%s_%s.%s", $this->_fileNameOptions['prefix'], date($this->_fileNameOptions['date_format']), $this->_fileNameOptions['extension']);
     }
