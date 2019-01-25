@@ -20,7 +20,7 @@ class FileUploader
     public function __construct(string $destination, array $fileNameOptions)
     {
         $this->_destination = $destination;
-        $this->_fileName = $fileNameOptions;
+        $this->_fileNameOptions = $fileNameOptions;
     }
 
     /**
