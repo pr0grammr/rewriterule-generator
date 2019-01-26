@@ -30,6 +30,7 @@ class IndexController extends AbstractController
         $errorMessages = $this->getParameter('errors');
         $error = false;
         $filename = false;
+        $success = false;
 
         /**
          * upload CSV
@@ -90,6 +91,7 @@ class IndexController extends AbstractController
                 $filename = $rewriteRuleGenerator->exportFile($this->getParameter('csv_upload_directory'), $this->buildNewFileName());
 
                 $csv->removeTmpFile();
+                $success = true;
 
                 /**
                  * clear from after submission
@@ -106,7 +108,8 @@ class IndexController extends AbstractController
         return $this->render('index/index.html.twig', [
             'form' => $form->createView(),
             'error' => $error,
-            'filename' => $filename
+            'filename' => $filename,
+            'success' => $success
         ]);
 
     }

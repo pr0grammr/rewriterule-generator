@@ -11,7 +11,7 @@
         .btn {
             display: block;
             text-align: center;
-            padding: .5rem;
+            padding: 1rem;
             color: #fff;
             margin: 1rem 0;
             font-size: 20px;
@@ -19,6 +19,7 @@
             border: none;
             text-transform: uppercase;
             text-decoration: none;
+            cursor: pointer;
         }
 
         .btn.btn--blue {
@@ -54,12 +55,20 @@
             font-size: 22px;
         }
 
-        .has--error {
-            border: 2px solid red;
+        .alert {
             padding: .5rem;
             display: block;
-            color: red;
             border-radius: 5px;
+        }
+
+        .alert.alert--error {
+            border: 2px solid red;
+            color: red;
+        }
+
+        .alert.alert--success {
+            border: 2px solid green;
+            color: green;
         }
     </style>
 
@@ -75,7 +84,11 @@
     <div class="form--box">
 
         {% if error %}
-            <p class="has--error">Error: {{ error }}</p>
+            <p class="alert alert--error">Error: {{ error }}</p>
+        {% endif %}
+
+        {% if success %}
+            <p class="alert alert--success">RewriteRule File successfully generated! Click the download link below</p>
         {% endif %}
 
         {{ form_start(form) }}
@@ -89,7 +102,7 @@
             <label for="csv_rewrite_engine">Include RewriteEngine On</label>
             {{ form_widget(form.rewrite_engine) }}
 
-            <button type="submit" class="btn btn--green">Upload</button>
+            <button type="submit" class="btn btn--green">Generate</button>
         {{ form_end(form) }}
 
         {% if filename %}
