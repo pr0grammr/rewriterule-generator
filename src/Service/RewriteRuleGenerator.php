@@ -122,7 +122,7 @@ class RewriteRuleGenerator
         }
 
         $fs->dumpFile($uploadDirectory . '/' . $filename, $this->_fileTemplate);
-        
-        return $uploadDirectory . '/' . $filename;
+
+        return $filename;
     }
 }

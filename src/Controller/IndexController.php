@@ -7,6 +7,7 @@ use App\Service\Csv;
 use App\Service\RewriteRuleGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class IndexController extends AbstractController
@@ -21,10 +22,14 @@ class IndexController extends AbstractController
      */
     public function index(Request $request, RewriteRuleGenerator $rewriteRuleGenerator)
     {
+        /**
+         * initialize some variables
+         */
         $form = $this->createForm(CsvType::class);
         $form->handleRequest($request);
         $errorMessages = $this->getParameter('errors');
         $error = false;
+        $filename = false;
 
         /**
          * upload CSV
@@ -78,9 +83,11 @@ class IndexController extends AbstractController
 
                 /**
                  * write txt file with given name and template
+                 * returns download link
+                 *
                  * finally remove CSV file from tmp folder
                  */
-                $rewriteRuleGenerator->exportFile($this->getParameter('csv_upload_directory'), $this->buildNewFileName());
+                $filename = $rewriteRuleGenerator->exportFile($this->getParameter('csv_upload_directory'), $this->buildNewFileName());
 
                 $csv->removeTmpFile();
 
@@ -96,8 +103,33 @@ class IndexController extends AbstractController
 
         }
 
-        return $this->render('index/index.html.twig', ['form' => $form->createView(), 'error' => $error]);
+        return $this->render('index/index.html.twig', [
+            'form' => $form->createView(),
+            'error' => $error,
+            'filename' => $filename
+        ]);
 
+    }
+
+    /**
+     * @Route("/download/{filename}", name="app_download")
+     *
+     * @param string $filename
+     *
+     * @return Response
+     */
+    public function download(string $filename)
+    {
+        $path = $this->getParameter('csv_upload_directory');
+        $content = file_get_contents($path . '/' . $filename);
+
+        $response = new Response();
+
+        $response->headers->set('Content-type', 'text/plain');
+        $response->headers->set('Content-Disposition', 'attachment;filename="' . $filename . '"');
+
+        $response->setContent($content);
+        return $response;
     }
 
     private function buildNewFileName()
