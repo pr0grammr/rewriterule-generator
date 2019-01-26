@@ -107,8 +107,10 @@ class RewriteRuleGenerator
      *
      * @param string $uploadDirectory
      * @param string $filename
+     *
+     * @return string download link
      */
-    public function exportFile(string $uploadDirectory, string $filename) : void
+    public function exportFile(string $uploadDirectory, string $filename) : string
     {
         /**
          * create filesystem instance
@@ -120,5 +122,7 @@ class RewriteRuleGenerator
         }
 
         $fs->dumpFile($uploadDirectory . '/' . $filename, $this->_fileTemplate);
+        
+        return $uploadDirectory . '/' . $filename;
     }
 }
