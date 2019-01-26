@@ -119,7 +119,6 @@ class RewriteRuleGenerator
             $fs->mkdir($uploadDirectory);
         }
 
-        $fs->touch($uploadDirectory . '/' . $filename);
-        $fs->appendToFile($uploadDirectory . '/' . $filename, $this->_fileTemplate);
+        $fs->dumpFile($uploadDirectory . '/' . $filename, $this->_fileTemplate);
     }
 }

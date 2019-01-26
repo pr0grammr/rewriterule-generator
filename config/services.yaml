@@ -11,6 +11,8 @@ parameters:
         prefix: 'rewrites'
         date_format: 'Y_m_d_H_i'
         extension: 'txt'
+    errors:
+        invalid_extension: 'File is not a valid CSV file'
 
 services:
     # default configuration for services in *this* file

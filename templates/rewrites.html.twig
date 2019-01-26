@@ -1,0 +1,6 @@
+{% if csv.rewrite_engine_on %}RewriteEngine On{% endif %}
+
+{% for rule in csv.rewrite_rules %}
+RewriteRule {{ rule.from }} {{ rule.to }} {% if csv.status_code %}[R={{ csv.status_code }}]{% endif %}
+
+{% endfor %}
