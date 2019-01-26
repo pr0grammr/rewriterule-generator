@@ -27,11 +27,16 @@ class Csv
      */
     private $_rewriterules;
 
+    /**
+     * @var int
+     */
+    private $_invalidUrls;
+
     public function __construct(UploadedFile $csv)
     {
         $this->_csv = $csv;
+        $this->_invalidUrls = 0;
     }
-
 
     /**
      * builds unique tmp file name to avoid multiple files at same time
@@ -76,7 +81,7 @@ class Csv
      */
     public function isValid() : bool
     {
-        return $this->_csv->guessExtension() !== 'csv' ? false : true;
+        return $this->_csv->getClientMimeType() !== 'text/csv' ? false : true;
     }
 
     /**
@@ -100,16 +105,32 @@ class Csv
 
                 /**
                  * Iterate over all rows
+                 * validate URLs
                  * create new RewriteRule instance
                  * pass it to rules array
                  */
                 for ($i = 0; $i < count($row); $i+=2) {
-                    $this->_rewriterules[] = new RewriteRule($row[0], $row[1]);
+                    $from = $this->validateUrl($row[0]);
+                    $to = $this->validateUrl($row[1]);
+
+                    $this->_rewriterules[] = new RewriteRule($from, $to);
                 }
             }
             fclose($fileObj);
         }
 
         return $this->_rewriterules;
+    }
+
+    /**
+     * removes invalid symbols from URL
+     *
+     * @param string $url
+     * @return string
+     */
+    private function validateUrl(string $url)
+    {
+        $url = str_replace(' ', '', $url);
+        return preg_replace('/[(\(\)§\$%°\^\s\;\,"\\\'\{\}\[\]<>ß=\ã)]*/i', '', $url);
     }
 }

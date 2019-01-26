@@ -14,10 +14,6 @@ class RewriteRule
      */
     private $_to;
 
-    /**
-     * @var int
-     */
-    private $_statusCode;
 
     public function __construct(string $from, string $to)
     {
@@ -39,21 +35,5 @@ class RewriteRule
     public function getTo() : string
     {
         return $this->_to;
-    }
-
-    /**
-     * @return int
-     */
-    public function getStatusCode() : int
-    {
-        return $this->_statusCode;
-    }
-
-    /**
-     * @param int $statusCode
-     */
-    public function setStatusCode(int $statusCode) : void
-    {
-        $this->_statusCode = $statusCode;
     }
 }
