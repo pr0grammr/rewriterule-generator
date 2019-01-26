@@ -138,7 +138,7 @@ class IndexController extends AbstractController
     private function buildNewFileName()
     {
         $fileNameFormat = $this->getParameter('file_name_options');
-        $date = new \DateTime('now';
+        $date = new \DateTime('now');
         return sprintf("%s_%s.%s", $fileNameFormat['prefix'], $date->format($fileNameFormat['date_format']), $fileNameFormat['extension']);
     }
 }
