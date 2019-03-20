@@ -27,6 +27,27 @@ class RewriteRuleGenerator
     private $_fileTemplate;
 
     /**
+     * @var string
+     */
+    private $_additionalFlags;
+
+    /**
+     * @return mixed
+     */
+    public function getAdditionalFlags()
+    {
+        return $this->_additionalFlags;
+    }
+
+    /**
+     * @param mixed $additionalFlags
+     */
+    public function setAdditionalFlags($additionalFlags): void
+    {
+        $this->_additionalFlags = $additionalFlags;
+    }
+
+    /**
      * @param bool $rewriteEngineOn
      */
     public function setRewriteEngineOn(bool $rewriteEngineOn) : void
@@ -98,7 +119,8 @@ class RewriteRuleGenerator
         return [
             'rewrite_engine_on' => $this->_rewriteEngineOn,
             'rewrite_rules' => $this->_rewriteRules,
-            'status_code' => $this->_statusCode
+            'status_code' => $this->_statusCode,
+            'additional_flags' => $this->_additionalFlags
         ];
     }
 

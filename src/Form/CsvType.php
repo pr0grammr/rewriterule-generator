@@ -26,6 +26,7 @@ class CsvType extends AbstractType
                 'placeholder' => false
             ])
             ->add('custom_status_code', TextType::class, ['label' => false, 'required' => false])
+            ->add('additional_flags', TextType::class, ['label' => 'Additional flags (like L, QSA)', 'required' => false])
             ->add('rewrite_engine', CheckboxType::class, ['label' => 'Include Rewrite Engine', 'required' => false])
         ;
     }
