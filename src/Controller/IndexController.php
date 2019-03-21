@@ -80,6 +80,10 @@ class IndexController extends AbstractController
                     $rewriteRuleGenerator->setRewriteEngineOn(true);
                 }
 
+                if (isset($formOptions['additional_flags'])) {
+                    $rewriteRuleGenerator->setAdditionalFlags($formOptions['additional_flags']);
+                }
+
                 $rewriteRuleGenerator->setFileTemplate($this->renderView('rewrites.html.twig', ['csv' => $rewriteRuleGenerator->toArray()]));
 
                 /**

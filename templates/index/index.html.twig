@@ -99,6 +99,9 @@
             <p class="form--headline">Additional options:</p>
             {{ form_widget(form.options) }}
             {{ form_widget(form.custom_status_code) }}
+            <label for="additional_flags">Additional flags (like QSA, L)</label>
+            {{ form_widget(form.additional_flags) }}
+            <br />
             <label for="csv_rewrite_engine">Include RewriteEngine On</label>
             {{ form_widget(form.rewrite_engine) }}
 
